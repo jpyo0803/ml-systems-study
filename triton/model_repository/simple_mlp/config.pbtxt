@@ -1,0 +1,44 @@
+name: "simple_mlp"
+platform: "pytorch_libtorch"
+
+# Batch 옵션 A (배치 미사용, dynamic_batching과 동시 사용 X)
+max_batch_size: 32
+
+# Batch 옵션 B (다이나믹 배칭 사용, preferred_batch_size <= max_batch_size)
+dynamic_batching {
+  preferred_batch_size: [ 4, 8, 16 ]
+  max_queue_delay_microseconds: 2000
+}
+
+input [
+  {
+    name: "INPUT__0"
+    data_type: TYPE_FP32
+    dims: [4]
+  }
+]
+
+output [
+  {
+    name: "OUTPUT__0"
+    data_type: TYPE_FP32
+    dims: [2]
+  }
+]
+
+instance_group [
+  {
+    count: 2 # 서빙 모델 인스턴스 개수 조절
+    kind: KIND_GPU
+  }
+]
+
+# 모델 최적화, FP16/INT8 최적화, 커널 퓨전, 더 작은 메모리 footprint, 더 빠른 inference
+# dynamic_batching 또는 instance_group 실험에서는 결과를 명확히 보기 위해 끄기 
+optimization {
+  execution_accelerators {
+#    gpu_execution_accelerator : [
+#      { name : "tensorrt" }
+#    ]
+  }
+}
