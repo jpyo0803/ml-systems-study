@@ -1,3 +1,7 @@
 venv
 **/__pycache__/
 **/*.pt
+
+
+**/dataset/*
+!**/dataset/.gitkeep

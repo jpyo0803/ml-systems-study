@@ -1,4 +1,4 @@
-name: "simple_mlp"
+name: "mnist_classifier"
 platform: "pytorch_libtorch"
 
 # Batch 옵션 A (배치 미사용, dynamic_batching과 동시 사용 X)
@@ -14,7 +14,7 @@ input [
   {
     name: "INPUT__0"
     data_type: TYPE_FP32
-    dims: [4]
+    dims: [1, 28, 28]
   }
 ]
 
@@ -22,13 +22,13 @@ output [
   {
     name: "OUTPUT__0"
     data_type: TYPE_FP32
-    dims: [2]
+    dims: [10]
   }
 ]
 
 instance_group [
   {
-    count: 2 # 서빙 모델 인스턴스 개수 조절
+    count: 1 # 서빙 모델 인스턴스 개수 조절
     kind: KIND_GPU
   }
 ]
