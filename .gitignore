@@ -8,3 +8,5 @@ venv
 
 **/*.onnx
 **/*.onnx.data
+
+**/build

@@ -1,0 +1,7 @@
+```sh
+docker build -t onnx_cpp_server:latest --build-arg ONNXRUNTIME_VERSION=1.15.1 -f Dockerfile .
+```
+
+```sh
+docker run --rm -p 8000:8000 -v $(pwd)/mnist_classifier.onnx:/models/mnist_classifier.onnx:ro onnx_cpp_server:latest
+```
